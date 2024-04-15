@@ -132,6 +132,12 @@ class EsriModule {
     // -------------------------------------------
     
     func loadWebMap(itemId: String) {
+        
+        /*
+         let portal = AGSPortal.init(url: URL(string: portapleUrl)!, loginRequired: true)
+         portal.credential = AGSCredential(user: portalUserName, password: portalPassword)
+         */
+         
         let portal = AGSPortal.arcGISOnline(withLoginRequired: false)
         let itemID = itemId
         let portalItem = AGSPortalItem(portal: portal, itemID: itemID)
