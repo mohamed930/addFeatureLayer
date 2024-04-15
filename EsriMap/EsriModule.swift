@@ -80,16 +80,6 @@ class EsriModule {
             
             
         }
-        
-//        mapView!.map = map
-//
-//        mapView!.setViewpoint(
-//            AGSViewpoint(
-//                latitude: lati,
-//                longitude: long,
-//                scale: 200_000
-//            )
-//        )
 
     }
     
@@ -136,6 +126,33 @@ class EsriModule {
         mapView!.callout.isAccessoryButtonHidden = true
         mapView!.callout.show(for: graphic, tapLocation: tapLocation, animated: true)
     }
+    // -------------------------------------------
+    
+    // MARK: - load Web map.
+    // -------------------------------------------
+    
+    func loadWebMap(itemId: String) {
+        let portal = AGSPortal.arcGISOnline(withLoginRequired: false)
+        let itemID = itemId
+        let portalItem = AGSPortalItem(portal: portal, itemID: itemID)
+        
+        let map = AGSMap(item: portalItem)
+        mapView!.map = map
+        
+        // Handle map loading completion or errors
+        map.load(completion: { [weak self] error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Error loading map: \(error.localizedDescription)")
+            } else {
+                print("Map loaded successfully!")
+                // Optionally, set an initial viewpoint here if needed
+            }
+            
+        })
+    }
+    
     // -------------------------------------------
     
     // method provides a line symbol for the route graphic
